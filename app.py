@@ -306,7 +306,28 @@ def render_message(msg: dict) -> None:
 # Main app
 # ---------------------------------------------------------------------------
 def main() -> None:
-    init_state()
+    try:
+        init_state()
+    except Exception as e:
+        render_sidebar()
+        st.markdown(
+            """
+            <div class="gc-title">
+                <h1>GigaCorp Support Assistant</h1>
+                <p>System Configuration</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.error(
+            f"### ⚠️ Configuration Error\n\n"
+            f"**Error Details:** {str(e)}\n\n"
+            "To resolve this, please configure your Groq API Key:\n\n"
+            "1. **Locally:** Create a `.env` file in the root folder with `GROQ_API_KEY=gsk_...`\n"
+            "2. **Streamlit Cloud:** Add `GROQ_API_KEY = \"gsk_...\"` in the **Secrets** manager of your Streamlit dashboard (lower-right corner -> Settings -> Secrets)."
+        )
+        st.stop()
+
     render_sidebar()
 
     # ── Title ──────────────────────────────────────────────────────────────

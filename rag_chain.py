@@ -286,8 +286,15 @@ def build_session_factory():
 
     groq_key = os.getenv("GROQ_API_KEY", "")
     if not groq_key:
+        try:
+            import streamlit as st
+            groq_key = st.secrets.get("GROQ_API_KEY", "")
+        except Exception:
+            pass
+
+    if not groq_key:
         raise EnvironmentError(
-            "GROQ_API_KEY is not set. Add it to your .env file or environment."
+            "GROQ_API_KEY is not set. Please add it to your environment variables or Streamlit secrets."
         )
 
     print(f"[rag] Loading embedding model: {EMBED_MODEL} ...")
