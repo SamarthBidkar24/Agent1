@@ -1,0 +1,24 @@
+# GigaCorp FAQ RAG Assistant — Python dependencies
+# Install with: pip install -r requirements.txt
+
+# ── LangChain stack ────────────────────────────────────────────────────────
+langchain==1.2.14
+langchain-core==1.4.9
+langchain-community==0.4.1
+langchain-huggingface==1.2.2          # HuggingFaceEmbeddings (non-deprecated)
+langchain-groq==1.1.3                  # ChatGroq integration
+
+# ── Embeddings & vector store ──────────────────────────────────────────────
+sentence-transformers==5.6.0           # all-MiniLM-L6-v2 model
+faiss-cpu==1.14.3                      # local FAISS index (CPU build)
+
+# ── Hugging Face utilities ─────────────────────────────────────────────────
+huggingface-hub==1.23.0
+transformers==5.13.0
+torch==2.10.0                          # required by sentence-transformers
+
+# ── UI ─────────────────────────────────────────────────────────────────────
+streamlit==1.45.1
+
+# ── Utilities ──────────────────────────────────────────────────────────────
+python-dotenv==1.2.1                   # loads GROQ_API_KEY from .env

@@ -1,0 +1,182 @@
+﻿1  GIGACORP CUSTOMER FAQ
+2  ======================
+3  Last Updated: July 2026 | Version 3.2
+4  Contact: support@gigacorp.io | 1-800-GIGA-HELP (1-800-444-2435)
+5
+6  ---------------------------------------------------------------
+7  SECTION 1: SHIPPING POLICIES
+8  ---------------------------------------------------------------
+9
+10 Q1.1: What shipping options does GigaCorp offer?
+11 A1.1: GigaCorp offers four shipping tiers: Standard Ground ($4.99, 5-7 business
+12        days), Expedited ($12.99, 2-3 business days), Overnight Priority ($24.99,
+13        next business day by 10:30 AM), and Same-Day Delivery ($39.99, available
+14        in select metro areas for orders placed before 11:00 AM local time).
+15
+16 Q1.2: Is free shipping available?
+17 A1.2: Yes. All orders totaling $75.00 or more (before taxes and after any
+18        discounts) qualify for free Standard Ground shipping within the contiguous
+19        United States. Orders to Alaska, Hawaii, and U.S. territories do not
+20        qualify for free shipping and are charged a flat regional surcharge of
+21        $14.99 regardless of order size.
+22
+23 Q1.3: Does GigaCorp ship internationally?
+24 A1.3: GigaCorp ships to 47 countries. International Standard shipping costs
+25        $19.99 and takes 10-15 business days. International Express shipping costs
+26        $44.99 and takes 4-6 business days. Customers are responsible for all
+27        import duties, customs fees, and local VAT charges. GigaCorp does not
+28        ship to embargoed nations or restricted regions as defined by U.S. export
+29        control regulations.
+30
+31 Q1.4: When will my order ship after I place it?
+32 A1.4: Orders placed Monday through Friday before 2:00 PM Eastern Time (ET) are
+33        processed and dispatched the same business day. Orders placed after
+34        2:00 PM ET, or on weekends and federal holidays, are dispatched on the
+35        next business day. During peak seasons (November 15 - December 31),
+36        processing may extend by 1-2 additional business days.
+37
+38 Q1.5: How can I track my shipment?
+39 A1.5: A tracking number is emailed to the address on file within 1 hour of
+40        shipment dispatch. Tracking is available via the GigaCorp Order Portal at
+41        portal.gigacorp.io/track or directly through the carrier's website.
+42        GigaCorp partners with UPS, FedEx, and USPS. If no tracking update
+43        appears within 48 hours of the dispatch confirmation email, contact
+44        support at support@gigacorp.io with your order number.
+45
+46 ---------------------------------------------------------------
+47 SECTION 2: RETURN PROCESS
+48 ---------------------------------------------------------------
+49
+50 Q2.1: What is GigaCorp's return window?
+51 A2.1: Most items may be returned within 30 calendar days of the delivery date
+52        for a full refund to the original payment method. GigaShield Pro hardware
+53        devices and enterprise software licenses carry an extended 60-day return
+54        window. Consumable goods (filters, ink cartridges, disposable components)
+55        are non-returnable once opened. All items must be in original, unused
+56        condition with all original packaging and accessories included.
+57
+58 Q2.2: How do I initiate a return?
+59 A2.2: Log in to your account at gigacorp.io/account, navigate to "Order
+60        History," select the relevant order, and click "Request Return." You will
+61        receive a prepaid return shipping label via email within 2 business days.
+62        Affix the label to the outside of the package and drop it off at any
+63        authorized UPS or FedEx location. Returns without a GigaCorp-issued label
+64        will not be accepted at our warehouse and may be returned to sender.
+65
+66 Q2.3: How long does the refund take to process?
+67 A2.3: Once the returned item is received and inspected at our fulfillment center
+68        (typically 3-5 business days after carrier pickup), refunds are issued
+69        within 2 business days. Credit card and PayPal refunds typically appear
+70        in 3-7 banking days. GigaWallet credits are applied instantly. Bank
+71        transfer refunds may take up to 10 business days depending on the
+72        receiving institution.
+73
+74 Q2.4: Are there any restocking fees?
+75 A2.4: Standard consumer products are refunded in full with no restocking fee.
+76        Enterprise hardware bundles valued over $1,500.00 are subject to a 15%
+77        restocking fee if returned after 15 calendar days. Custom-configured or
+78        build-to-order systems are subject to a 25% restocking fee and cannot be
+79        returned after 30 days under any circumstances. Software license keys
+80        that have been activated are non-refundable.
+81
+82 Q2.5: What if my item arrives damaged or defective?
+83 A2.5: Report damaged or defective items within 7 calendar days of delivery by
+84        emailing photos of the damage to defects@gigacorp.io with your order
+85        number in the subject line. GigaCorp will ship a replacement unit via
+86        Overnight Priority at no charge and arrange free pickup of the defective
+87        item. If a replacement is unavailable, a full refund (including original
+88        shipping cost) will be issued with no restocking fee applied.
+89
+90 ---------------------------------------------------------------
+91 SECTION 3: BUSINESS HOURS
+92 ---------------------------------------------------------------
+93
+94 Q3.1: When is GigaCorp customer support available?
+95 A3.1: GigaCorp's general customer support operates Monday through Friday,
+96        8:00 AM - 9:00 PM Eastern Time, and Saturday, 9:00 AM - 6:00 PM Eastern
+97        Time. Support is closed on Sundays and all U.S. federal holidays.
+98        Tier 3 (Enterprise) account holders have access to 24/7 dedicated support
+99        regardless of holidays (see Section 4 for tier details).
+100
+101 Q3.2: How can I reach customer support?
+102 A3.2: GigaCorp support is reachable through four channels: (1) Phone at
+103        1-800-GIGA-HELP (1-800-444-2435), average hold time under 4 minutes;
+104        (2) Live Chat at gigacorp.io/chat, available during business hours;
+105        (3) Email at support@gigacorp.io, response within 1 business day;
+106        (4) Community Forum at community.gigacorp.io, monitored by staff
+107        and peers. Emergency escalation for Enterprise accounts: 1-800-444-9911.
+108
+109 Q3.3: Are GigaCorp's physical offices open to the public?
+110 A3.3: GigaCorp's headquarters in Austin, TX and regional offices in Chicago, IL,
+111        and Seattle, WA are open for scheduled appointments only. Walk-ins are
+112        not accepted. Office hours are Monday through Friday, 9:00 AM - 5:00 PM
+113        local time. To schedule an appointment, email appointments@gigacorp.io
+114        at least 48 hours in advance. The Austin HQ also operates a product
+115        experience showroom open Tuesday and Thursday, 10:00 AM - 4:00 PM CT.
+116
+117 Q3.4: Does GigaCorp observe any holidays when support is unavailable?
+118 A3.4: GigaCorp's standard support team observes the following U.S. federal
+119        holidays: New Year's Day, Memorial Day, Independence Day, Labor Day,
+120        Thanksgiving Day, and Christmas Day. On Christmas Eve and New Year's Eve,
+121        support hours are reduced to 9:00 AM - 2:00 PM ET. Enterprise (Tier 3)
+122        clients are unaffected; their dedicated support line operates year-round.
+123
+124 Q3.5: What is the expected response time for email inquiries?
+125 A3.5: Standard (Tier 1) customers can expect an email response within 1 business
+126        day (24 hours during business hours). Professional (Tier 2) customers
+127        receive a guaranteed 8-business-hour response. Enterprise (Tier 3)
+128        customers receive a guaranteed 2-hour response at all times, including
+129        nights, weekends, and holidays, with a dedicated account manager
+130        assigned to every enterprise account.
+131
+132 ---------------------------------------------------------------
+133 SECTION 4: SERVICE TIERS
+134 ---------------------------------------------------------------
+135
+136 Q4.1: What service tiers does GigaCorp offer?
+137 A4.1: GigaCorp offers three service tiers: Tier 1 - Standard (free, included
+138        with all accounts), Tier 2 - Professional ($49.99/month or $499.99/year),
+139        and Tier 3 - Enterprise (custom pricing, starting at $1,200/month with
+140        annual contract required). Each tier unlocks progressively higher support
+141        priority, storage quotas, API rate limits, and dedicated resources.
+142
+143 Q4.2: What is included in the Standard (Tier 1) plan?
+144 A4.2: The Standard plan includes: 50 GB cloud storage, up to 3 user seats,
+145        standard email and chat support (business hours only), access to the
+146        GigaCorp Community Forum, 1,000 API calls per day, and monthly usage
+147        reports. Standard plan users are limited to 5 active projects and
+148        cannot access beta features or priority processing queues.
+149
+150 Q4.3: What additional benefits does the Professional (Tier 2) plan provide?
+151 A4.3: The Professional plan includes everything in Standard, plus: 500 GB cloud
+152        storage, up to 20 user seats, 8-business-hour email support SLA, live
+153        phone support during business hours, 25,000 API calls per day, advanced
+154        analytics dashboard, unlimited active projects, early access to beta
+155        features, and a 99.5% uptime SLA with credit compensation for outages
+156        exceeding 30 minutes ($10 credit per incident, capped at $50/month).
+157
+158 Q4.4: What does the Enterprise (Tier 3) plan include?
+159 A4.4: The Enterprise plan includes everything in Professional, plus: unlimited
+160        cloud storage, unlimited user seats, 24/7 dedicated support with a named
+161        account manager, 2-hour guaranteed response SLA (all hours, all days),
+162        500,000 API calls per day with burst capacity up to 2,000,000 on request,
+163        custom integrations and SSO/SAML configuration, on-site training sessions
+164        (up to 4 per year, travel costs included), a 99.99% uptime SLA with
+165        automatic credit compensation of $500 per hour of downtime, and a
+166        dedicated private cloud environment option at additional cost.
+167
+168 Q4.5: Can I upgrade or downgrade my service tier mid-billing cycle?
+169 A4.5: Upgrades take effect immediately upon confirmation. The new tier's rate is
+170        prorated for the remaining days in the current billing cycle, and the
+171        difference is charged to the payment method on file. Downgrades take
+172        effect at the start of the next billing cycle; no partial refunds are
+173        issued for the current cycle. Enterprise contracts require a 30-day
+174        written notice to downgrade, submitted to contracts@gigacorp.io.
+175        Users may upgrade or downgrade up to twice per calendar year without
+176        a service fee; additional tier changes are subject to a $25.00 admin fee.
+177
+178 ---------------------------------------------------------------
+179 END OF DOCUMENT
+180 ---------------------------------------------------------------
+181 GigaCorp, Inc. | 1200 Innovation Blvd, Austin, TX 78701
+182 gigacorp.io | legal@gigacorp.io | (c) 2026 GigaCorp, Inc. All rights reserved.
