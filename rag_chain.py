@@ -257,9 +257,13 @@ def build_session_factory():
     from langchain_groq                    import ChatGroq
 
     if not VECTORSTORE_DIR.exists():
-        raise FileNotFoundError(
-            f"FAISS index not found at '{VECTORSTORE_DIR}/'. Run ingest.py first."
+        print(
+            f"[rag] Vectorstore not found at '{VECTORSTORE_DIR}/'. "
+            "Running ingestion automatically ..."
         )
+        from ingest import run_ingestion
+        run_ingestion(verbose=False)
+        print("[rag] Ingestion complete. Continuing with index load ...")
     groq_key = os.getenv("GROQ_API_KEY", "")
     if not groq_key:
         raise EnvironmentError(

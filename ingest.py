@@ -6,7 +6,10 @@ the embedded doc-line numbers as metadata, embeds each chunk with
 sentence-transformers/all-MiniLM-L6-v2 (via LangChain HuggingFaceEmbeddings),
 and stores the resulting FAISS index under vectorstore/.
 
-Usage:
+The core pipeline is exposed as run_ingestion() so that rag_chain.py
+(and any other module) can call it directly to build the index on demand.
+
+Usage (CLI):
     python ingest.py
 """
 
@@ -16,11 +19,11 @@ import sys
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
-# 1. Constants
+# 1. Module-level defaults (used by CLI; callers may override via parameters)
 # ---------------------------------------------------------------------------
-FAQ_PATH       = Path("data/gigacorp_faq.txt")
+FAQ_PATH        = Path("data/gigacorp_faq.txt")
 VECTORSTORE_DIR = Path("vectorstore")
-EMBED_MODEL    = "sentence-transformers/all-MiniLM-L6-v2"
+EMBED_MODEL     = "sentence-transformers/all-MiniLM-L6-v2"
 
 # ---------------------------------------------------------------------------
 # 2. Parse the FAQ file into (doc_line_number, text) pairs
@@ -56,7 +59,6 @@ def parse_numbered_lines(filepath: Path) -> list[tuple[int, str]]:
 # 3. Group parsed lines into logical Q&A chunks
 # ---------------------------------------------------------------------------
 
-# Patterns that mark the start of a new chunk or a section header
 _SECTION_HEADER = re.compile(r"^SECTION\s+\d+:", re.IGNORECASE)
 _QA_QUESTION    = re.compile(r"^Q\d+\.\d+:")          # e.g. Q1.1:
 _QA_ANSWER      = re.compile(r"^A\d+\.\d+:")          # e.g. A1.1:
@@ -69,10 +71,8 @@ _DOC_META       = re.compile(                          # header / footer prose
 
 def build_chunks(parsed_lines: list[tuple[int, str]]) -> list[dict]:
     """
-    Strategy
-    --------
     Walk through the parsed lines and accumulate text into a chunk buffer.
-    A new chunk is started whenever we encounter a Q-line (question).
+    A new chunk is started whenever a Q-line (question) is encountered.
     The current section name is tracked and injected into every chunk's
     metadata so the retriever knows which section the answer came from.
 
@@ -105,33 +105,23 @@ def build_chunks(parsed_lines: list[tuple[int, str]]) -> list[dict]:
         })
 
     for doc_no, content in parsed_lines:
-        # Skip decorative separators and pure-whitespace lines
         if not content or _SEPARATOR.match(content):
             continue
-
-        # Detect section headers — update running section, flush pending chunk
         if _SECTION_HEADER.match(content):
             flush(current_chunk, current_qa_id)
             current_chunk  = []
             current_qa_id  = ""
             current_section = content.strip()
             continue
-
-        # Skip document metadata lines (title, footer, etc.)
         if _DOC_META.match(content):
             continue
-
-        # Detect question start — flush previous chunk, begin new one
         if _QA_QUESTION.match(content):
             flush(current_chunk, current_qa_id)
             current_chunk = []
             m = re.match(r"^(Q\d+\.\d+):", content)
             current_qa_id = m.group(1) if m else ""
-
-        # Accumulate lines into the current chunk
         current_chunk.append((doc_no, content))
 
-    # Flush whatever remains
     flush(current_chunk, current_qa_id)
     return chunks
 
@@ -140,21 +130,21 @@ def build_chunks(parsed_lines: list[tuple[int, str]]) -> list[dict]:
 # 4. Convert chunks to LangChain Documents
 # ---------------------------------------------------------------------------
 
-def chunks_to_documents(chunks: list[dict]):
+def chunks_to_documents(chunks: list[dict], faq_path: Path = FAQ_PATH):
     """Wrap each chunk dict in a LangChain Document with rich metadata."""
     from langchain_core.documents import Document
 
     docs = []
     for chunk in chunks:
         metadata = {
-            "source":     str(FAQ_PATH),
+            "source":     str(faq_path),
             "section":    chunk["section"],
             "qa_id":      chunk["qa_id"],
             "start_line": chunk["start_line"],
             "end_line":   chunk["end_line"],
-            # Human-readable citation range for LLM responses
-            "citation":   (
-                f"gigacorp_faq.txt lines {chunk['start_line']}-{chunk['end_line']}"
+            "citation": (
+                f"gigacorp_faq.txt lines "
+                f"{chunk['start_line']}-{chunk['end_line']}"
             ),
         }
         docs.append(Document(page_content=chunk["text"], metadata=metadata))
@@ -166,14 +156,18 @@ def chunks_to_documents(chunks: list[dict]):
 # 5. Embed + persist FAISS index
 # ---------------------------------------------------------------------------
 
-def build_and_save_index(docs) -> int:
-    """Embed documents and save FAISS index. Returns number of docs stored."""
-    from langchain_huggingface          import HuggingFaceEmbeddings
+def build_and_save_index(
+    docs,
+    vectorstore_dir: Path = VECTORSTORE_DIR,
+    embed_model: str = EMBED_MODEL,
+) -> int:
+    """Embed documents, save FAISS index, return number of docs stored."""
+    from langchain_huggingface            import HuggingFaceEmbeddings
     from langchain_community.vectorstores import FAISS
 
-    print(f"[ingest] Loading embedding model: {EMBED_MODEL} ...")
+    print(f"[ingest] Loading embedding model: {embed_model} ...")
     embeddings = HuggingFaceEmbeddings(
-        model_name=EMBED_MODEL,
+        model_name=embed_model,
         model_kwargs={"device": "cpu"},
         encode_kwargs={"normalize_embeddings": True},
     )
@@ -181,40 +175,79 @@ def build_and_save_index(docs) -> int:
     print(f"[ingest] Embedding {len(docs)} chunks ...")
     vectorstore = FAISS.from_documents(docs, embeddings)
 
-    VECTORSTORE_DIR.mkdir(parents=True, exist_ok=True)
-    vectorstore.save_local(str(VECTORSTORE_DIR))
-    print(f"[ingest] FAISS index saved to '{VECTORSTORE_DIR}/'")
+    vectorstore_dir.mkdir(parents=True, exist_ok=True)
+    vectorstore.save_local(str(vectorstore_dir))
+    print(f"[ingest] FAISS index saved to '{vectorstore_dir}/'")
 
     return len(docs)
 
 
 # ---------------------------------------------------------------------------
-# 6. Main
+# 6. Public pipeline function — importable by rag_chain.py and others
 # ---------------------------------------------------------------------------
 
-def main() -> None:
-    if not FAQ_PATH.exists():
-        sys.exit(f"[ERROR] FAQ file not found: {FAQ_PATH}")
+def run_ingestion(
+    faq_path: Path = FAQ_PATH,
+    vectorstore_dir: Path = VECTORSTORE_DIR,
+    embed_model: str = EMBED_MODEL,
+    verbose: bool = True,
+) -> int:
+    """
+    Full ingestion pipeline: parse → chunk → embed → save FAISS index.
 
-    print(f"[ingest] Parsing '{FAQ_PATH}' ...")
-    parsed_lines = parse_numbered_lines(FAQ_PATH)
-    print(f"[ingest] Read {len(parsed_lines)} numbered lines from the file.")
+    Parameters
+    ----------
+    faq_path        : Path to the numbered FAQ text file.
+    vectorstore_dir : Directory where the FAISS index will be saved.
+    embed_model     : HuggingFace model name for sentence embeddings.
+    verbose         : If True, print chunk-level debug info to stdout.
+
+    Returns
+    -------
+    int : Number of chunks indexed.
+
+    This function is safe to import and call from other modules.
+    rag_chain.py calls it automatically when the vectorstore is missing.
+    """
+    if not faq_path.exists():
+        raise FileNotFoundError(
+            f"[ingest] FAQ source file not found: {faq_path}\n"
+            f"Make sure '{faq_path}' exists before running ingestion."
+        )
+
+    print(f"[ingest] Parsing '{faq_path}' ...")
+    parsed_lines = parse_numbered_lines(faq_path)
+    print(f"[ingest] Read {len(parsed_lines)} numbered lines.")
 
     print("[ingest] Building Q&A chunks ...")
     chunks = build_chunks(parsed_lines)
 
-    # Debug preview — show every chunk's metadata
-    for i, c in enumerate(chunks, 1):
-        print(
-            f"  Chunk {i:>2}: [{c['qa_id'] or 'narrative':>6}] "
-            f"lines {c['start_line']:>3}-{c['end_line']:>3}  "
-            f"| {c['section']}"
-        )
+    if verbose:
+        for i, c in enumerate(chunks, 1):
+            print(
+                f"  Chunk {i:>2}: [{c['qa_id'] or 'narrative':>6}] "
+                f"lines {c['start_line']:>3}-{c['end_line']:>3}  "
+                f"| {c['section']}"
+            )
 
-    docs  = chunks_to_documents(chunks)
-    count = build_and_save_index(docs)
+    docs  = chunks_to_documents(chunks, faq_path)
+    count = build_and_save_index(docs, vectorstore_dir, embed_model)
 
-    print(f"\nDone! {count} chunks indexed and saved to '{VECTORSTORE_DIR}/' successfully.")
+    print(f"[ingest] Done! {count} chunks indexed and saved to '{vectorstore_dir}/'.")
+    return count
+
+
+# ---------------------------------------------------------------------------
+# 7. CLI entry point
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    run_ingestion(
+        faq_path=FAQ_PATH,
+        vectorstore_dir=VECTORSTORE_DIR,
+        embed_model=EMBED_MODEL,
+        verbose=True,
+    )
 
 
 if __name__ == "__main__":
