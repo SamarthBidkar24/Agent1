@@ -17,7 +17,7 @@ from pathlib import Path
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
 
-VECTORSTORE_DIR = Path("vectorstore")
+VECTORSTORE_DIR = Path(__file__).parent.resolve() / "vectorstore"
 EMBED_MODEL     = "sentence-transformers/all-MiniLM-L6-v2"
 QUERY           = "What is your return policy?"
 TOP_K           = 3

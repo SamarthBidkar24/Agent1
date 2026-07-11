@@ -40,7 +40,7 @@ except ImportError:
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-VECTORSTORE_DIR = Path("vectorstore")
+VECTORSTORE_DIR = Path(__file__).parent.resolve() / "vectorstore"
 EMBED_MODEL     = "sentence-transformers/all-MiniLM-L6-v2"
 GROQ_MODEL      = "llama-3.3-70b-versatile"
 TOP_K           = 3

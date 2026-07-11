@@ -21,8 +21,8 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 # 1. Module-level defaults (used by CLI; callers may override via parameters)
 # ---------------------------------------------------------------------------
-FAQ_PATH        = Path("data/gigacorp_faq.txt")
-VECTORSTORE_DIR = Path("vectorstore")
+FAQ_PATH        = Path(__file__).parent.resolve() / "data" / "gigacorp_faq.txt"
+VECTORSTORE_DIR = Path(__file__).parent.resolve() / "vectorstore"
 EMBED_MODEL     = "sentence-transformers/all-MiniLM-L6-v2"
 
 # ---------------------------------------------------------------------------
