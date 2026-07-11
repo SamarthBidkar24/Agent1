@@ -256,6 +256,8 @@ def build_session_factory():
     from langchain_community.vectorstores import FAISS
     from langchain_groq                    import ChatGroq
 
+    groq_key = ""
+
     index_faiss = VECTORSTORE_DIR / "index.faiss"
     index_pkl = VECTORSTORE_DIR / "index.pkl"
 
