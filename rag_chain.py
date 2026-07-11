@@ -256,14 +256,33 @@ def build_session_factory():
     from langchain_community.vectorstores import FAISS
     from langchain_groq                    import ChatGroq
 
-    if not VECTORSTORE_DIR.exists():
-        print(
-            f"[rag] Vectorstore not found at '{VECTORSTORE_DIR}/'. "
-            "Running ingestion automatically ..."
-        )
-        from ingest import run_ingestion
-        run_ingestion(verbose=False)
-        print("[rag] Ingestion complete. Continuing with index load ...")
+    index_faiss = VECTORSTORE_DIR / "index.faiss"
+    index_pkl = VECTORSTORE_DIR / "index.pkl"
+
+    try:
+        if not (index_faiss.exists() and index_pkl.exists()):
+            print(
+                f"[rag] FAISS index files not found at '{VECTORSTORE_DIR}/'. "
+                "Running ingestion automatically ..."
+            )
+            from ingest import run_ingestion
+            run_ingestion(verbose=False)
+            print("[rag] Ingestion complete. Continuing with index load ...")
+    except FileNotFoundError as e:
+        import os
+        from ingest import FAQ_PATH
+        print("=== RAG DIAGNOSTIC INFO ===")
+        print(f"Current Working Directory: {os.getcwd()}")
+        print(f"Script Location: {__file__}")
+        print(f"VECTORSTORE_DIR: {VECTORSTORE_DIR} (exists: {VECTORSTORE_DIR.exists()})")
+        print(f"FAQ_PATH: {FAQ_PATH} (exists: {FAQ_PATH.exists()})")
+        try:
+            print(f"Parent directory contents: {os.listdir(Path(__file__).parent.resolve())}")
+        except Exception as dir_err:
+            print(f"Could not list directory contents: {dir_err}")
+        print("===========================")
+        raise e
+
     groq_key = os.getenv("GROQ_API_KEY", "")
     if not groq_key:
         raise EnvironmentError(
@@ -278,11 +297,27 @@ def build_session_factory():
     )
 
     print(f"[rag] Loading FAISS index from '{VECTORSTORE_DIR}/' ...")
-    db        = FAISS.load_local(
-        str(VECTORSTORE_DIR),
-        embeddings,
-        allow_dangerous_deserialization=True,
-    )
+    try:
+        db        = FAISS.load_local(
+            str(VECTORSTORE_DIR),
+            embeddings,
+            allow_dangerous_deserialization=True,
+        )
+    except FileNotFoundError as e:
+        import os
+        from ingest import FAQ_PATH
+        print("=== RAG FAISS LOAD DIAGNOSTIC INFO ===")
+        print(f"Current Working Directory: {os.getcwd()}")
+        print(f"Script Location: {__file__}")
+        print(f"VECTORSTORE_DIR: {VECTORSTORE_DIR} (exists: {VECTORSTORE_DIR.exists()})")
+        print(f"FAQ_PATH: {FAQ_PATH} (exists: {FAQ_PATH.exists()})")
+        try:
+            print(f"Parent directory contents: {os.listdir(Path(__file__).parent.resolve())}")
+        except Exception as dir_err:
+            print(f"Could not list directory contents: {dir_err}")
+        print("===========================")
+        raise e
+
     retriever = db.as_retriever(search_kwargs={"k": TOP_K})
 
     print(f"[rag] Initialising ChatGroq model: {GROQ_MODEL} ...")

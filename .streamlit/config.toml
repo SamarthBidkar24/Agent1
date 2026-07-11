@@ -4,3 +4,7 @@ headless = true
 
 [browser]
 gatherUsageStats = false
+
+[client]
+showErrorDetails = true
+
