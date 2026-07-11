@@ -269,7 +269,6 @@ def build_session_factory():
             run_ingestion(verbose=False)
             print("[rag] Ingestion complete. Continuing with index load ...")
     except FileNotFoundError as e:
-        import os
         from ingest import FAQ_PATH
         print("=== RAG DIAGNOSTIC INFO ===")
         print(f"Current Working Directory: {os.getcwd()}")
@@ -304,7 +303,6 @@ def build_session_factory():
             allow_dangerous_deserialization=True,
         )
     except FileNotFoundError as e:
-        import os
         from ingest import FAQ_PATH
         print("=== RAG FAISS LOAD DIAGNOSTIC INFO ===")
         print(f"Current Working Directory: {os.getcwd()}")
